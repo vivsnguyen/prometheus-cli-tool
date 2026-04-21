@@ -1,5 +1,12 @@
 import yaml
 
+def analyze_file(filepath):
+    with open(filepath) as f:
+        data = yaml.safe_load(f)
+    
+    for group in data["groups"]:
+        for rule in group["rules"]:
+
 # with open("test.yml") as f:
 #     data = yaml.safe_load(f)
 
