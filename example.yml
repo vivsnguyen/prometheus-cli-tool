@@ -1,0 +1,38 @@
+groups:
+  - name: bad_examples
+    rules:
+      # Missing almost everything
+      - alert: high_error_rate
+        expr: rate(http_errors_total[5m]) > 0.1
+ 
+      # Missing runbook, short for duration
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes{job="api"} > 1e9
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: Memory is high
+ 
+      # Missing description, static summary, non-standard severity
+      - alert: DatabaseDown
+        expr: up{job="postgres"} == 0
+        for: 2m
+        labels:
+          severity: sev1
+        annotations:
+          summary: Database is down
+ 
+  - name: good_examples
+    rules:
+      # Well-formed alert
+      - alert: HighErrorRate
+        expr: rate(http_errors_total{job="api",env="production"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate on {{ $labels.job }} ({{ $value | humanizePercentage }})"
+          description: "The error rate for {{ $labels.job }} has exceeded 5% for 5 minutes. Check recent deployments and downstream dependencies."
+          runbook_url: "https://runbooks.example.com/high-error-rate"
+ 
