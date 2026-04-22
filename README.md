@@ -54,4 +54,4 @@ I skipped "too narrow" selectors (e.g. hardcoded pod names or instance IPs). Det
 
 **Single-rule vs cross-rule analysis**
 
-Most checks look at one rule at a time and live in `analyze_rule`. The warning/critical relationship check is different because it needs to know whether a `warning` version of an alert exists anywhere in the file before it can flag a `critical`. This required two passes: one to collect all severities by alert name, and a second to run the checks. Keeping this separation explicit in `analyze_file` makes it clear why the structure is different from the per-rule checks.
+Most checks look at one rule at a time and live in `analyze_rule`. The warning/critical relationship check is different because it needs to know whether a `warning` version of an alert exists anywhere in the file before it can flag a `critical`. This required two passes: one to collect all severities by alert name, and a second to run the checks.
